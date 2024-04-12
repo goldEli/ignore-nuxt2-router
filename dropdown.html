@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Select Dropdown</title>
+    <script>
+        // 向插件发送消息
+        function sendMessage() {
+            const selectElement = document.getElementById('dropdown');
+            const selectedOptions = Array.from(selectElement.options)
+                .filter(option => option.selected)
+                .map(option => option.value);
+
+            vscode.postMessage({
+                text: selectedOptions.join(', ') // 发送所选项
+            });
+        }
+    </script>
+</head>
+<body>
+    <select id="dropdown" multiple>
+        <option value="Option 1">Option 1</option>
+        <option value="Option 2">Option 2</option>
+        <option value="Option 3">Option 3</option>
+        <option value="Option 4">Option 4</option>
+    </select>
+    <button onclick="sendMessage()">OK</button>
+</body>
+</html>
