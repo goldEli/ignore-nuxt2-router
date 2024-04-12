@@ -14,9 +14,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "ignore-nuxt2-router.helloWorld",
-        "title": "Hello World"
+        "command": "extension.showMultiSelectDropdown",
+        "title": "Show Multi-Select Dropdown"
       }
+    ],
+    "views": {
+      "webview": [
+        {
+          "id": "multiSelectDropdown",
+          "name": "Multi-Select Dropdown"
+        }
+      ]
+    },
+    "activationEvents": [
+      "onCommand:extension.showMultiSelectDropdown"
     ]
   },
   "scripts": {

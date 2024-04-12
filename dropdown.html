@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multi-Select Dropdown</title>
     <script>
-        // 向插件发送消息
-        function sendMessage() {
-            const selectElement = document.getElementById('dropdown');
-            const selectedOptions = Array.from(selectElement.options)
-                .filter(option => option.selected)
-                .map(option => option.value);
+      // 向插件发送消息
+      var vscode = acquireVsCodeApi();
+      function sendMessage() {
+        const selectElement = document.getElementById("dropdown");
+        const selectedOptions = Array.from(selectElement.options)
+          .filter((option) => option.selected)
+          .map((option) => option.value);
 
-            vscode.postMessage({
-                text: selectedOptions.join(', ') // 发送所选项
-            });
-        }
+        // const text = '123'
+        const text = selectedOptions.join(", "); // 发送所选项
+        vscode.postMessage({
+          text,
+        });
+      }
+      // 处理来自插件的消息
+      window.addEventListener("message", (event) => {
+        const message = event.data;
+        console.log(message)
+        const msg = document.querySelector("#msg")
+        msg.innerHTML = message.text
+      });
     </script>
-</head>
-<body>
+  </head>
+  <body>
+    <div id="msg"></div>
     <select id="dropdown" multiple>
-        <option value="Option 1">Option 1</option>
-        <option value="Option 2">Option 2</option>
-        <option value="Option 3">Option 3</option>
-        <option value="Option 4">Option 4</option>
+      <option value="Option 1">Option 1</option>
+      <option value="Option 2">Option 2</option>
+      <option value="Option 3">Option 3</option>
+      <option value="Option 4">Option 4</option>
     </select>
     <button onclick="sendMessage()">OK</button>
-</body>
+  </body>
 </html>
